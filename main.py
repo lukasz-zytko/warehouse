@@ -17,7 +17,12 @@ def show():
 def add(a,b,c,d):
     items.append({"name":a, "quantity":b, "unit": c, "unit_price":d})
 
-menu = input("Hello. What do you want to do? [exit] [show] [add]:")
+def sell(a,b):
+    for item in items:
+        if item["name"] == a:
+            item["quantity"] = str(int(item["quantity"])-int(b))
+
+menu = input("Hello. What do you want to do? [exit] [show] [add] [sell]:")
 if __name__ == "__main__":
     while menu != "e":
         if menu == "s":
@@ -29,6 +34,11 @@ if __name__ == "__main__":
             unit = input("Item unit: ")
             unit_price = input("Item unit price: ")
             add(name,quantity,unit,unit_price)
+        elif menu == "sell":
+            print("What do you want to sell")
+            name = input("Item name: ")
+            quantity = input("Item quantity: ")
+            sell(name,quantity)
         menu = input("What do you want to do?:")
     print("Ok. See you later..")
     
