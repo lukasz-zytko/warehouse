@@ -10,6 +10,7 @@ items = [{
 
 def show():
     print("Name\t\tQuantity\tUnit\tUnit Price (PLN)")
+    print("----\t\t--------\t----\t----------------")
     for item in items:
         print(item["name"]+"\t"+item["quantity"]+"\t\t"+item["unit"]+"\t\t"+item["unit_price"])
 
