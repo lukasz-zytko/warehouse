@@ -14,11 +14,21 @@ def show():
     for item in items:
         print(item["name"]+"\t"+item["quantity"]+"\t\t"+item["unit"]+"\t\t"+item["unit_price"])
 
-menu = input("Hello. What do you want to do?[exit][show]:")
+def add(a,b,c,d):
+    items.append({"name":a, "quantity":b, "unit": c, "unit_price":d})
+
+menu = input("Hello. What do you want to do? [exit] [show] [add]:")
 if __name__ == "__main__":
     while menu != "e":
         if menu == "s":
             show()
+        elif menu == "a":
+            print("Add new item to your warehouse:")
+            name = input("Item name: ")
+            quantity = input("Item quantity: ")
+            unit = input("Item unit: ")
+            unit_price = input("Item unit price: ")
+            add(name,quantity,unit,unit_price)
         menu = input("What do you want to do?:")
     print("Ok. See you later..")
     
