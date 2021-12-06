@@ -8,6 +8,8 @@ items = [{
                 "name": "Red Wine", "quantity": "10", "unit": "l", "unit_price": "37"
                 }]
 
+sold_items = []
+
 def show():
     print("Name\t\tQuantity\tUnit\tUnit Price (PLN)")
     print("----\t\t--------\t----\t----------------")
@@ -17,12 +19,29 @@ def show():
 def add(a,b,c,d):
     items.append({"name":a, "quantity":b, "unit": c, "unit_price":d})
 
-def sell(a,b):
+def sell_item(a,b):
     for item in items:
         if item["name"] == a:
             item["quantity"] = str(int(item["quantity"])-int(b))
+            sold_items.append({"name": item["name"], "quantity": b, "unit": item["unit"], "unit_price": item["unit_price"]})
+            print(sold_items)
 
-menu = input("Hello. What do you want to do? [exit] [show] [add] [sell]:")
+def get_cost():
+    total_cost = sum([int(item["quantity"]) * int(item["unit_price"]) for item in items])
+    return total_cost
+
+def get_income():
+    total_income = sum([int(item["quantity"]) * int(item["unit_price"]) for item in sold_items])
+    return total_income
+
+def show_revenue():
+    print("Revenue breakdown (PLN):")
+    print("Income:\t\t"+str(get_income()))
+    print("Cost:\t\t"+str(get_cost()))
+    print("------------------------")
+    print("Revenue:\t"+str(get_income() - get_cost()))
+
+menu = input("Hello. What do you want to do? [exit] [show] [add] [sell] [show_revenue]:")
 if __name__ == "__main__":
     while menu != "e":
         if menu == "s":
@@ -38,7 +57,9 @@ if __name__ == "__main__":
             print("What do you want to sell")
             name = input("Item name: ")
             quantity = input("Item quantity: ")
-            sell(name,quantity)
+            sell_item(name,quantity)
+        elif menu == "r":
+            show_revenue()
         menu = input("What do you want to do?:")
     print("Ok. See you later..")
     
