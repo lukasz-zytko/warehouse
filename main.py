@@ -1,11 +1,11 @@
 items = [{
-    "name": "Ron Barcelo", "quantity": "5", "unit": "l", "unit_price": "100"
+    "name": "ron", "quantity": "5", "unit": "l", "unit_price": "100.34567"
     },{
-        "name": "Cuban cigars", "quantity": "3", "unit": "pic", "unit_price": "65"
+        "name": "cigars", "quantity": "3", "unit": "pic", "unit_price": "65"
         },{
-            "name": "Chocolates", "quantity": "10", "unit": "kg", "unit_price": "27"
+            "name": "choco", "quantity": "10", "unit": "kg", "unit_price": "27"
             },{
-                "name": "Red Wine", "quantity": "10", "unit": "l", "unit_price": "37"
+                "name": "wine", "quantity": "10", "unit": "l", "unit_price": "37"
                 }]
 
 sold_items = []
@@ -14,7 +14,7 @@ def show():
     print("Name\t\tQuantity\tUnit\tUnit Price (PLN)")
     print("----\t\t--------\t----\t----------------")
     for item in items:
-        print(item["name"]+"\t"+item["quantity"]+"\t\t"+item["unit"]+"\t\t"+item["unit_price"])
+        print(item["name"]+"\t\t"+str(round(float(item["quantity"]),2))+"\t\t"+item["unit"]+"\t\t"+str(round(float(item["unit_price"]),2)))
 
 def add(a,b,c,d):
     items.append({"name":a, "quantity":b, "unit": c, "unit_price":d})
@@ -22,26 +22,29 @@ def add(a,b,c,d):
 def sell_item(a,b):
     for item in items:
         if item["name"] == a:
-            item["quantity"] = str(int(item["quantity"])-int(b))
+            item["quantity"] = str(float(item["quantity"])-float(b))
             sold_items.append({"name": item["name"], "quantity": b, "unit": item["unit"], "unit_price": item["unit_price"]})
             print(sold_items)
+        else:
+            print("No item. Try again.")
+            break
 
 def get_cost():
-    total_cost = sum([int(item["quantity"]) * int(item["unit_price"]) for item in items])
+    total_cost = sum([float(item["quantity"]) * float(item["unit_price"]) for item in items])
     return total_cost
 
 def get_income():
-    total_income = sum([int(item["quantity"]) * int(item["unit_price"]) for item in sold_items])
+    total_income = sum([float(item["quantity"]) * float(item["unit_price"]) for item in sold_items])
     return total_income
 
 def show_revenue():
     print("Revenue breakdown (PLN):")
-    print("Income:\t\t"+str(get_income()))
-    print("Cost:\t\t"+str(get_cost()))
+    print("Income:\t\t"+str(round(get_income(),2)))
+    print("Cost:\t\t"+str(round(get_cost(),2)))
     print("------------------------")
-    print("Revenue:\t"+str(get_income() - get_cost()))
+    print("Revenue:\t"+str(round((get_income() - get_cost()),2)))
 
-menu = input("Hello. What do you want to do? [exit] [show] [add] [sell] [show_revenue]:")
+menu = input("Hello. What do you want to do? [Exit] [Show] [Add] [selL] [show_Revenue]:")
 if __name__ == "__main__":
     while menu != "e":
         if menu == "s":
@@ -53,7 +56,7 @@ if __name__ == "__main__":
             unit = input("Item unit: ")
             unit_price = input("Item unit price: ")
             add(name,quantity,unit,unit_price)
-        elif menu == "sell":
+        elif menu == "l":
             print("What do you want to sell")
             name = input("Item name: ")
             quantity = input("Item quantity: ")
