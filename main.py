@@ -52,15 +52,18 @@ def export_items_to_csv():
         for item in items:
             writer.writerow({"name": item["name"], "quantity": item["quantity"], "unit": item["unit"], "unit_price": item["unit_price"]})
 
-def load_items_from_csv():
-    with open('magazyn.csv', newline='') as csvfile:
+def load_items_from_csv(a='magazyn.csv'):
+    with open(a, newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         items.clear()
         for row in reader:
             items.append({"name": row["name"], "quantity": row["quantity"], "unit": row["unit"], "unit_price": row["unit_price"]})
+        print("List successfully loaded!")
 
-menu = input("Hello. What do you want to do? [Exit] [Show] [Add] [sEll] [show_Revenue] [saVe] [Load]:")
+
 if __name__ == "__main__":
+    load_items_from_csv()
+    menu = input("Hello. What do you want to do? [Exit] [Show] [Add] [sEll] [show_Revenue] [saVe] [Load]:")
     while menu != "e":
         if menu == "s":
             show()
@@ -83,7 +86,5 @@ if __name__ == "__main__":
             print("Successfully exported to magazyn.csv")
         elif menu == "l":
             load_items_from_csv()
-            print("List successfully loaded!")
         menu = input("What do you want to do? [Exit] [Show] [Add] [sEll] [show_Revenue] [saVe] [Load]:")
     print("Ok. See you later..")
-    
