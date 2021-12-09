@@ -1,3 +1,5 @@
+import csv
+
 items = [{
     "name": "ron", "quantity": "5", "unit": "l", "unit_price": "100.34567"
     },{
@@ -44,7 +46,15 @@ def show_revenue():
     print("------------------------")
     print("Revenue:\t"+str(round((get_income() - get_cost()),2)))
 
-menu = input("Hello. What do you want to do? [Exit] [Show] [Add] [selL] [show_Revenue]:")
+def export_items_to_csv():
+    with open('magazyn.csv', 'w', newline='') as csvfile:
+        fieldnames = ["name", "quantity", "unit", "unit_price"]
+        writer = csv.DictWriter(csvfile,fieldnames=fieldnames)
+        writer.writeheader()
+        for item in items:
+            writer.writerow({"name": item["name"], "quantity": item["quantity"], "unit": item["unit"], "unit_price": item["unit_price"]})
+
+menu = input("Hello. What do you want to do? [Exit] [Show] [Add] [selL] [show_Revenue] [saVe]:")
 if __name__ == "__main__":
     while menu != "e":
         if menu == "s":
@@ -63,6 +73,9 @@ if __name__ == "__main__":
             sell_item(name,quantity)
         elif menu == "r":
             show_revenue()
+        elif menu == "v":
+            export_items_to_csv()
+            print("Successfully exported to magazyn.csv")
         menu = input("What do you want to do?:")
     print("Ok. See you later..")
     
