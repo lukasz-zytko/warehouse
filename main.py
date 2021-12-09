@@ -1,4 +1,5 @@
 import csv
+import sys
 """
 items = [{
     "name": "ron", "quantity": "5", "unit": "l", "unit_price": "100.34567"
@@ -60,9 +61,10 @@ def load_items_from_csv(a='magazyn.csv'):
             items.append({"name": row["name"], "quantity": row["quantity"], "unit": row["unit"], "unit_price": row["unit_price"]})
         print("List successfully loaded!")
 
-
 if __name__ == "__main__":
-    load_items_from_csv()
+    if len(sys.argv) == 2:
+        file_name = sys.argv[1]
+        load_items_from_csv(file_name)
     menu = input("Hello. What do you want to do? [Exit] [Show] [Add] [sEll] [show_Revenue] [saVe] [Load]:")
     while menu != "e":
         if menu == "s":
