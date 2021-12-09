@@ -1,5 +1,5 @@
 import csv
-
+"""
 items = [{
     "name": "ron", "quantity": "5", "unit": "l", "unit_price": "100.34567"
     },{
@@ -9,7 +9,8 @@ items = [{
             },{
                 "name": "wine", "quantity": "10", "unit": "l", "unit_price": "37"
                 }]
-
+"""
+items = []
 sold_items = []
 
 def show():
@@ -27,9 +28,6 @@ def sell_item(a,b):
             item["quantity"] = str(float(item["quantity"])-float(b))
             sold_items.append({"name": item["name"], "quantity": b, "unit": item["unit"], "unit_price": item["unit_price"]})
             print(sold_items)
-        else:
-            print("No item. Try again.")
-            break
 
 def get_cost():
     total_cost = sum([float(item["quantity"]) * float(item["unit_price"]) for item in items])
@@ -54,7 +52,14 @@ def export_items_to_csv():
         for item in items:
             writer.writerow({"name": item["name"], "quantity": item["quantity"], "unit": item["unit"], "unit_price": item["unit_price"]})
 
-menu = input("Hello. What do you want to do? [Exit] [Show] [Add] [selL] [show_Revenue] [saVe]:")
+def load_items_from_csv():
+    with open('magazyn.csv', newline='') as csvfile:
+        reader = csv.DictReader(csvfile)
+        items.clear()
+        for row in reader:
+            items.append({"name": row["name"], "quantity": row["quantity"], "unit": row["unit"], "unit_price": row["unit_price"]})
+
+menu = input("Hello. What do you want to do? [Exit] [Show] [Add] [sEll] [show_Revenue] [saVe] [Load]:")
 if __name__ == "__main__":
     while menu != "e":
         if menu == "s":
@@ -66,7 +71,7 @@ if __name__ == "__main__":
             unit = input("Item unit: ")
             unit_price = input("Item unit price: ")
             add(name,quantity,unit,unit_price)
-        elif menu == "l":
+        elif menu == "sell":
             print("What do you want to sell")
             name = input("Item name: ")
             quantity = input("Item quantity: ")
@@ -76,6 +81,9 @@ if __name__ == "__main__":
         elif menu == "v":
             export_items_to_csv()
             print("Successfully exported to magazyn.csv")
-        menu = input("What do you want to do?:")
+        elif menu == "l":
+            load_items_from_csv()
+            print("List successfully loaded!")
+        menu = input("What do you want to do? [Exit] [Show] [Add] [sEll] [show_Revenue] [saVe] [Load]:")
     print("Ok. See you later..")
     
